@@ -82,10 +82,14 @@ target_link_libraries(gwenview
     ${KDE4_KIO_LIBS}
     ${LIBKONQ_LIBRARY}
     ${QT_QTCORE_LIBRARY}
-    ${KACTIVITIES_LIBRARY}
     )
 
 target_link_libraries(gwenview LINK_INTERFACE_LIBRARIES ${KDE4_KIO_LIBS} ${QT_QTCORE_LIBRARY})
+
+if (KActivities_FOUND)
+    add_definitions(-DENABLE_KACTIVITIES)
+    target_link_libraries(gwenview ${KACTIVITIES_LIBRARY})
+endif()
 
 if (KIPI_FOUND)
     target_link_libraries(gwenview ${KIPI_LIBRARIES})
