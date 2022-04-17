@@ -104,8 +104,8 @@ private:
     KUrl mUrl;
     bool mFullScreen;
     bool mSlideShow;
-    std::auto_ptr<KTempDir> mMultipleUrlsDir;
-    std::auto_ptr<Gwenview::MainWindow> mMainWindow;
+    std::unique_ptr<KTempDir> mMultipleUrlsDir;
+    std::unique_ptr<Gwenview::MainWindow> mMainWindow;
 };
 
 int main(int argc, char *argv[])
