@@ -40,6 +40,13 @@ macro_log_feature(PNG_FOUND "libpng" "PNG image manipulation support" "http://ww
 find_package(Exiv2)
 macro_log_feature(EXIV2_FOUND "Exiv2" "Image metadata support" "http://www.exiv2.org" TRUE "0.19")
 
+#find_package(exiv2)
+#macro_log_feature(exiv2_FOUND "exiv2" "Image metadata support" "http://www.exiv2.org" TRUE "0.27")
+#if(exiv2_FOUND)
+#    set(EXIV2_LIBRARIES exiv2lib)
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
+#endif()
+
 macro_optional_find_package(Kipi)
 macro_log_feature(KIPI_FOUND "libkipi" "Provides various image manipulation and export features" "http://www.kipi-plugins.org" FALSE)
 
