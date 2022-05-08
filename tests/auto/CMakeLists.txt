@@ -1,6 +1,6 @@
 macro(gv_add_unit_test _test)
     set(_src ${_test}.cpp ${ARGN})
-    qt4_automoc(${_src})
+    set(CMAKE_AUTOMOC ON)
     kde4_add_unit_test(${_test} ${_src})
     target_link_libraries(${_test}
         ${BALOO_LIBRARIES}
