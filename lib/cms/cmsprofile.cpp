@@ -66,7 +66,6 @@ namespace Cms
 //- JPEG -----------------------------------------------------------------------
 static cmsHPROFILE loadFromJpegData(const QByteArray& data)
 {
-    cmsHPROFILE profile = 0;
     struct jpeg_decompress_struct srcinfo;
 
     JPEGErrorManager srcErrorManager;
@@ -74,7 +73,7 @@ static cmsHPROFILE loadFromJpegData(const QByteArray& data)
     jpeg_create_decompress(&srcinfo);
     if (setjmp(srcErrorManager.jmp_buffer)) {
         kError() << "libjpeg error in src\n";
-        return 0;
+        return nullptr;
     }
 
     QBuffer buffer(const_cast<QByteArray*>(&data));
@@ -85,6 +84,7 @@ static cmsHPROFILE loadFromJpegData(const QByteArray& data)
     jpeg_read_header(&srcinfo, true);
     jpeg_start_decompress(&srcinfo);
 
+    cmsHPROFILE profile = nullptr;
     uchar* profile_data;
     uint profile_len;
     if (read_icc_profile(&srcinfo, &profile_data, &profile_len)) {
