@@ -55,7 +55,11 @@ struct DocumentPrivate
     QSize mSize;
     QImage mImage;
     QMap<int, QImage> mDownSampledImageMap;
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr mExiv2Image;
+#else
     Exiv2::Image::AutoPtr mExiv2Image;
+#endif
     MimeTypeUtils::Kind mKind;
     QByteArray mFormat;
     ImageMetaInfoModel mImageMetaInfoModel;

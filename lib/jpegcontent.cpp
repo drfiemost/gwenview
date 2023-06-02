@@ -216,7 +216,11 @@ bool JpegContent::load(const QString& path)
 
 bool JpegContent::loadFromData(const QByteArray& data)
 {
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr image;
+#else
     Exiv2::Image::AutoPtr image;
+#endif
     Exiv2ImageLoader loader;
     if (!loader.load(data)) {
         kError() << "Could not load image with Exiv2, reported error:" << loader.errorMessage();
@@ -276,7 +280,11 @@ Orientation JpegContent::orientation() const
     if (it == d->mExifData.end() || it->count() == 0 || it->typeId() != Exiv2::unsignedShort) {
         return NOT_AVAILABLE;
     }
+#if EXIV2_TEST_VERSION(0,28,0)
+    return Orientation(it->toUint32());
+#else
     return Orientation(it->toLong());
+#endif
 }
 
 int JpegContent::dotsPerMeterX() const
@@ -296,7 +304,11 @@ int JpegContent::dotsPerMeter(const QString& keyName) const
     if (it == d->mExifData.end()) {
         return 0;
     }
+#if EXIV2_TEST_VERSION(0,28,0)
+    int res = it->toUint32();
+#else
     int res = it->toLong();
+#endif
     QString keyVal = "Exif.Image." + keyName;
     Exiv2::ExifKey keyResolution(keyVal.toAscii().data());
     it = d->mExifData.findKey(keyResolution);
@@ -312,9 +324,17 @@ int JpegContent::dotsPerMeter(const QString& keyName) const
     const float INCHESPERMETER = (100. / 2.54);
     switch (res) {
     case 3:  // dots per cm
+#if EXIV2_TEST_VERSION(0,28,0)
+        return int(it->toUint32() * 100);
+#else
         return int(it->toLong() * 100);
+#endif
     default:  // dots per inch
+#if EXIV2_TEST_VERSION(0,28,0)
+        return int(it->toUint32() * INCHESPERMETER);
+#else
         return int(it->toLong() * INCHESPERMETER);
+#endif
     }
 
     return 0;
@@ -546,7 +566,11 @@ QImage JpegContent::thumbnail() const
 #else
         Exiv2::DataBuf thumbnail = d->mExifData.copyThumbnail();
 #endif
+#if(EXIV2_TEST_VERSION(0,28,0))
+        image.loadFromData(thumbnail.c_data(), thumbnail.size());
+#else
         image.loadFromData(thumbnail.pData_, thumbnail.size_);
+#endif
     }
     return image;
 }
@@ -602,9 +626,11 @@ bool JpegContent::save(QIODevice* device)
         applyPendingTransformation();
         d->mPendingTransformation = false;
     }
-
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr image = Exiv2::ImageFactory::open((unsigned char*)d->mRawData.data(), d->mRawData.size());
+#else
     Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open((unsigned char*)d->mRawData.data(), d->mRawData.size());
-
+#endif
     // Store Exif info
     image->setExifData(d->mExifData);
     image->setComment(d->mComment.toUtf8().data());

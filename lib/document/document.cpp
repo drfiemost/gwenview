@@ -391,12 +391,21 @@ AbstractDocumentEditor* Document::editor()
     return d->mImpl->editor();
 }
 
+#if EXIV2_TEST_VERSION(0,28,0)
+void Document::setExiv2Image(Exiv2::Image::UniquePtr image)
+{
+    d->mExiv2Image = std::move(image);
+    d->mImageMetaInfoModel.setExiv2Image(d->mExiv2Image.get());
+    emit metaInfoUpdated();
+}
+#else
 void Document::setExiv2Image(Exiv2::Image::AutoPtr image)
 {
     d->mExiv2Image = image;
     d->mImageMetaInfoModel.setExiv2Image(d->mExiv2Image.get());
     emit metaInfoUpdated();
 }
+#endif
 
 void Document::setDownSampledImage(const QImage& image, int invertedZoom)
 {

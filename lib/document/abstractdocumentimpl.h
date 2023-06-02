@@ -108,7 +108,11 @@ protected:
     void setDocumentImageSize(const QSize& size);
     void setDocumentKind(MimeTypeUtils::Kind);
     void setDocumentFormat(const QByteArray& format);
+#if EXIV2_TEST_VERSION(0,28,0)
+    void setDocumentExiv2Image(Exiv2::Image::UniquePtr);
+#else
     void setDocumentExiv2Image(Exiv2::Image::AutoPtr);
+#endif
     void setDocumentDownSampledImage(const QImage&, int invertedZoom);
     void setDocumentCmsProfile(Cms::Profile::Ptr profile);
     void setDocumentErrorString(const QString&);

@@ -54,7 +54,11 @@ public:
 
     bool load(const QByteArray&);
     QString errorMessage() const;
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr popImage();
+#else
     Exiv2::Image::AutoPtr popImage();
+#endif
 
 private:
     Exiv2ImageLoaderPrivate* const d;

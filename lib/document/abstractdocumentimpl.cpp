@@ -77,10 +77,17 @@ void AbstractDocumentImpl::setDocumentKind(MimeTypeUtils::Kind kind)
     d->mDocument->setKind(kind);
 }
 
+#if EXIV2_TEST_VERSION(0,28,0)
+void AbstractDocumentImpl::setDocumentExiv2Image(Exiv2::Image::UniquePtr image)
+{
+    d->mDocument->setExiv2Image(std::move(image));
+}
+#else
 void AbstractDocumentImpl::setDocumentExiv2Image(Exiv2::Image::AutoPtr image)
 {
     d->mDocument->setExiv2Image(image);
 }
+#endif
 
 void AbstractDocumentImpl::setDocumentDownSampledImage(const QImage& image, int invertedZoom)
 {

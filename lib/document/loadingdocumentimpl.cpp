@@ -98,7 +98,11 @@ struct LoadingDocumentImplPrivate
     QByteArray mData;
     QByteArray mFormat;
     QSize mImageSize;
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr mExiv2Image;
+#else
     Exiv2::Image::AutoPtr mExiv2Image;
+#endif
     std::unique_ptr<JpegContent> mJpegContent;
     QImage mImage;
     Cms::Profile::Ptr mCmsProfile;
@@ -481,7 +485,12 @@ void LoadingDocumentImpl::slotMetaInfoLoaded()
 
     setDocumentFormat(d->mFormat);
     setDocumentImageSize(d->mImageSize);
+    
+#if EXIV2_TEST_VERSION(0,28,0)
+    setDocumentExiv2Image(std::move(d->mExiv2Image));
+#else
     setDocumentExiv2Image(d->mExiv2Image);
+#endif
     setDocumentCmsProfile(d->mCmsProfile);
 
     d->mMetaInfoLoaded = true;

@@ -101,7 +101,11 @@ struct CacheItem
         if (!loader.load(header)) {
             return false;
         }
+#if EXIV2_TEST_VERSION(0,28,0)
+        Exiv2::Image::UniquePtr img = loader.popImage();
+#else
         Exiv2::Image::AutoPtr img = loader.popImage();
+#endif
         try {
             Exiv2::ExifData exifData = img->exifData();
             if (exifData.empty()) {

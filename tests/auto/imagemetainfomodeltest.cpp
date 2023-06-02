@@ -46,7 +46,11 @@ void ImageMetaInfoModelTest::testCatchExiv2Errors()
         data = file.readAll();
     }
 
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr image;
+#else
     Exiv2::Image::AutoPtr image;
+#endif
     {
         Exiv2ImageLoader loader;
         QVERIFY(loader.load(data));

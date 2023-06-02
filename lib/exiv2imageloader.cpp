@@ -38,7 +38,11 @@ namespace Gwenview
 
 struct Exiv2ImageLoaderPrivate
 {
+#if EXIV2_TEST_VERSION(0,28,0)
+    Exiv2::Image::UniquePtr mImage;
+#else
     Exiv2::Image::AutoPtr mImage;
+#endif
     QString mErrorMessage;
 };
 
@@ -78,9 +82,16 @@ QString Exiv2ImageLoader::errorMessage() const
     return d->mErrorMessage;
 }
 
+#if EXIV2_TEST_VERSION(0,28,0)
+Exiv2::Image::UniquePtr Exiv2ImageLoader::popImage()
+{
+    return std::move(d->mImage);
+}
+#else
 Exiv2::Image::AutoPtr Exiv2ImageLoader::popImage()
 {
     return d->mImage;
 }
+#endif
 
 } // namespace

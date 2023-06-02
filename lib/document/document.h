@@ -37,6 +37,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <lib/mimetypeutils.h>
 #include <lib/cms/cmsprofile.h>
 
+#include <exiv2/version.hpp>
+
 class QImage;
 class QRect;
 class QSize;
@@ -237,7 +239,11 @@ private:
     void setKind(MimeTypeUtils::Kind);
     void setFormat(const QByteArray&);
     void setSize(const QSize&);
+#if EXIV2_TEST_VERSION(0,28,0)
+    void setExiv2Image(Exiv2::Image::UniquePtr);
+#else
     void setExiv2Image(Exiv2::Image::AutoPtr);
+#endif
     void setDownSampledImage(const QImage&, int invertedZoom);
     void switchToImpl(AbstractDocumentImpl* impl);
     void setErrorString(const QString&);
