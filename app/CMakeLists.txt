@@ -2,7 +2,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/..
     ${EXIV2_INCLUDE_DIR}
     ${LIBKONQ_INCLUDE_DIR}
-    ${KACTIVITIES_INCLUDE_DIRS}
     )
 
 if (KIPI_FOUND)
@@ -85,11 +84,6 @@ target_link_libraries(gwenview
     )
 
 target_link_libraries(gwenview LINK_INTERFACE_LIBRARIES ${KDE4_KIO_LIBS} ${QT_QTCORE_LIBRARY})
-
-if (KActivities_FOUND)
-    add_definitions(-DENABLE_KACTIVITIES)
-    target_link_libraries(gwenview ${KACTIVITIES_LIBRARY})
-endif()
 
 if (KIPI_FOUND)
     target_link_libraries(gwenview ${KIPI_LIBRARIES})

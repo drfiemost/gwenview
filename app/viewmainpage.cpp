@@ -38,10 +38,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <KModelIndexProxyMapper>
 #include <KToggleAction>
 
-#ifdef ENABLE_KACTIVITIES
-#include <KActivities/ResourceInstance>
-#endif
-
 // Local
 #include "fileoperations.h"
 #include <gvcore.h>
@@ -157,12 +153,6 @@ struct ViewMainPagePrivate
     KToggleAction* mToggleThumbnailBarAction;
     KToggleAction* mSynchronizeAction;
     QCheckBox* mSynchronizeCheckBox;
-#ifdef ENABLE_KACTIVITIES
-    // Activity Resource events reporting needs to be above KPart,
-    // in the shell itself, to avoid problems with other MDI applications
-    // that use this KPart
-    QHash<DocumentView*, KActivities::ResourceInstance*> mActivityResources;
-#endif
     bool mFullScreenMode;
     bool mCompareMode;
     bool mThumbnailBarVisibleBeforeFullScreen;
@@ -273,9 +263,7 @@ struct ViewMainPagePrivate
                          mSlideShow, SLOT(resumeAndGoToNextUrl()));
 
         mDocumentViews << view;
-#ifdef ENABLE_KACTIVITIES
-        mActivityResources.insert(view, new KActivities::ResourceInstance(q->window()->winId(), view));
-#endif
+
         return view;
     }
 
@@ -293,9 +281,7 @@ struct ViewMainPagePrivate
         QObject::disconnect(view, 0, mSlideShow, 0);
 
         mDocumentViews.removeOne(view);
-#ifdef ENABLE_KACTIVITIES
-        mActivityResources.remove(view);
-#endif
+
         mDocumentViewContainer->deleteView(view);
     }
 
@@ -360,10 +346,7 @@ struct ViewMainPagePrivate
         }
         if (oldView) {
             oldView->setCurrent(false);
-#ifdef ENABLE_KACTIVITIES
-            Q_ASSERT(mActivityResources.contains(oldView));
-            mActivityResources.value(oldView)->notifyFocusedOut();
-#endif
+
         }
         view->setCurrent(true);
         mDocumentViewController->setView(view);
@@ -376,10 +359,6 @@ struct ViewMainPagePrivate
             // *before* listing /foo (because it matters less to the user)
             mThumbnailBar->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Current);
         }
-#ifdef ENABLE_KACTIVITIES
-        Q_ASSERT(mActivityResources.contains(view));
-        mActivityResources.value(view)->notifyFocusedIn();
-#endif
     }
 
     QModelIndex indexForView(DocumentView* view) const
@@ -697,9 +676,6 @@ void ViewMainPage::openUrls(const KUrl::List& allUrls, const KUrl& currentUrl)
         DocumentView* view = it.value();
         DocumentView::Setup savedSetup = d->mDocumentViewContainer->savedSetup(url);
         view->openUrl(url, savedSetup.valid ? savedSetup : setup);
-#ifdef ENABLE_KACTIVITIES
-        d->mActivityResources.value(view)->setUri(url);
-#endif
     }
 
     // Init views
