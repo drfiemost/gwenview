@@ -49,6 +49,7 @@ if(exiv2_FOUND)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
 endif()
 
+set(FPHSA_NAME_MISMATCHED TRUE)
 macro_optional_find_package(Kipi)
 macro_log_feature(KIPI_FOUND "libkipi" "Provides various image manipulation and export features" "http://www.kipi-plugins.org" FALSE)
 
@@ -64,6 +65,7 @@ if (NOT GWENVIEW_SEMANTICINFO_BACKEND_NONE)
     macro_log_feature(KFileMetaData_FOUND "KFileMetaData Library" "A library for extracting file metadata" "https://projects.kde.org/kfilemetadata" TRUE)
 endif()
 
+set(FPHSA_NAME_MISMATCHED TRUE)
 find_package(LibKonq)
 macro_log_feature(LIBKONQ_FOUND "libkonq" "Standard file management features" "http://www.kde.org" TRUE)
 
