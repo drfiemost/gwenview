@@ -76,9 +76,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "kipiexportaction.h"
 #include "kipiinterface.h"
 #endif
-#ifndef GWENVIEW_SEMANTICINFO_BACKEND_NONE
-#include "semanticinfocontextmanageritem.h"
-#endif
 #include "preloader.h"
 #include "savebar.h"
 #include "sidebar.h"
@@ -519,11 +516,6 @@ struct MainWindow::Private
 
         InfoContextManagerItem* infoItem = new InfoContextManagerItem(mContextManager);
 
-#ifndef GWENVIEW_SEMANTICINFO_BACKEND_NONE
-        SemanticInfoContextManagerItem* semanticInfoItem = 0;
-        semanticInfoItem = new SemanticInfoContextManagerItem(mContextManager, actionCollection, mViewMainPage);
-#endif
-
         ImageOpsContextManagerItem* imageOpsItem =
             new ImageOpsContextManagerItem(mContextManager, q);
 
@@ -539,12 +531,7 @@ struct MainWindow::Private
 
         page = new SideBarPage(i18n("Information"));
         page->setObjectName(QLatin1String("information"));
-        page->addWidget(infoItem->widget());
-#ifndef GWENVIEW_SEMANTICINFO_BACKEND_NONE
-        if (semanticInfoItem) {
-            page->addWidget(semanticInfoItem->widget());
-        }
-#endif
+
         mSideBar->addPage(page);
 
         page = new SideBarPage(i18n("Operations"));

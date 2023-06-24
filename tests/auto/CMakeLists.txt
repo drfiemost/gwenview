@@ -3,7 +3,6 @@ macro(gv_add_unit_test _test)
     set(CMAKE_AUTOMOC ON)
     kde4_add_unit_test(${_test} ${_src})
     target_link_libraries(${_test}
-        ${BALOO_LIBRARIES}
         ${KDE4_KIO_LIBS}
         ${KDE4_KDEUI_LIBS}
         ${KDE4_KDECORE_LIBS}
@@ -32,9 +31,6 @@ gv_add_unit_test(documenttest testutils.cpp)
 gv_add_unit_test(transformimageoperationtest)
 gv_add_unit_test(jpegcontenttest)
 gv_add_unit_test(thumbnailprovidertest testutils.cpp)
-if (NOT GWENVIEW_SEMANTICINFO_BACKEND_NONE)
-    gv_add_unit_test(semanticinfobackendtest)
-endif()
 gv_add_unit_test(timeutilstest)
 gv_add_unit_test(placetreemodeltest testutils.cpp)
 gv_add_unit_test(urlutilstest)

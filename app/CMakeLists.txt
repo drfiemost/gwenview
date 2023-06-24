@@ -38,13 +38,6 @@ set(gwenview_SRCS
     browsemainpage.cpp
     )
 
-if (NOT GWENVIEW_SEMANTICINFO_BACKEND_NONE)
-    set (gwenview_SRCS
-        ${gwenview_SRCS}
-        semanticinfocontextmanageritem.cpp
-        )
-endif()
-
 if (KIPI_FOUND)
     set (gwenview_SRCS
         ${gwenview_SRCS}
@@ -65,12 +58,6 @@ kde4_add_ui_files(gwenview_SRCS
     browsemainpage.ui
     )
 
-if (NOT GWENVIEW_SEMANTICINFO_BACKEND_NONE)
-    kde4_add_ui_files(gwenview_SRCS
-        semanticinfosidebaritem.ui
-        )
-endif()
-
 kde4_add_app_icon(gwenview_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../icons/hi*-apps-gwenview.png")
 
 kde4_add_executable(gwenview ${gwenview_SRCS})
@@ -87,10 +74,6 @@ target_link_libraries(gwenview LINK_INTERFACE_LIBRARIES ${KDE4_KIO_LIBS} ${QT_QT
 
 if (KIPI_FOUND)
     target_link_libraries(gwenview ${KIPI_LIBRARIES})
-endif()
-
-if (NOT GWENVIEW_SEMANTICINFO_BACKEND_NONE)
-    target_link_libraries(gwenview ${BALOO_LIBRARIES})
 endif()
 
 install(TARGETS gwenview

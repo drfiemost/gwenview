@@ -70,39 +70,6 @@ private:
     DateFilterWidgetPrivate* const d;
 };
 
-#ifndef GWENVIEW_SEMANTICINFO_BACKEND_NONE
-struct RatingWidgetPrivate;
-class RatingFilterWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    RatingFilterWidget(SortedDirModel*);
-    ~RatingFilterWidget();
-
-private Q_SLOTS:
-    void slotRatingChanged(int value);
-    void updateFilterMode();
-
-private:
-    RatingWidgetPrivate* const d;
-};
-
-struct TagFilterWidgetPrivate;
-class TagFilterWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    TagFilterWidget(SortedDirModel*);
-    ~TagFilterWidget();
-
-private Q_SLOTS:
-    void updateTagSetFilter();
-
-private:
-    TagFilterWidgetPrivate* const d;
-};
-#endif
-
 struct FilterControllerPrivate;
 /**
  * This class manages the filter widgets in the filter frame and assign the
@@ -120,10 +87,6 @@ public:
 private Q_SLOTS:
     void addFilterByName();
     void addFilterByDate();
-#ifndef GWENVIEW_SEMANTICINFO_BACKEND_NONE
-    void addFilterByRating();
-    void addFilterByTag();
-#endif
     void slotFilterWidgetClosed();
 
 private:
