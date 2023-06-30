@@ -335,7 +335,7 @@ void GvCore::rotateRight(const KUrl& url)
     applyTransform(url, ROT_90);
 }
 
-void GvCore::setRating(const KUrl& url, int rating)
+void GvCore::setRating([[maybe_unused]] const KUrl& url, [[maybe_unused]] int rating)
 {
 }
 

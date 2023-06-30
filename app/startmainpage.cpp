@@ -196,7 +196,7 @@ StartMainPage::~StartMainPage()
     delete d;
 }
 
-void StartMainPage::slotTagViewClicked(const QModelIndex& index)
+void StartMainPage::slotTagViewClicked([[maybe_unused]] const QModelIndex& index)
 {
 }
 

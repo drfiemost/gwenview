@@ -220,7 +220,7 @@ struct PreviewItemDelegatePrivate
                    ratingRowHeight());
     }
 
-    bool mouseButtonEventFilter(QEvent::Type type)
+    bool mouseButtonEventFilter([[maybe_unused]] QEvent::Type type)
     {
         return false;
     }
@@ -327,7 +327,9 @@ struct PreviewItemDelegatePrivate
         painter->drawText(rect.left() + posX, rect.top() + fm.ascent(), text);
     }
 
-    void drawRating(QPainter* painter, const QRect& rect, const QVariant& value)
+    void drawRating([[maybe_unused]] QPainter* painter,
+                    [[maybe_unused]] const QRect& rect,
+                    [[maybe_unused]] const QVariant& value)
     {
     }
 

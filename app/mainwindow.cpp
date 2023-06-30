@@ -514,7 +514,7 @@ struct MainWindow::Private
         connect(folderViewItem, SIGNAL(urlChanged(KUrl)),
                 q, SLOT(openDirUrl(KUrl)));
 
-        InfoContextManagerItem* infoItem = new InfoContextManagerItem(mContextManager);
+        [[maybe_unused]] InfoContextManagerItem* infoItem = new InfoContextManagerItem(mContextManager);
 
         ImageOpsContextManagerItem* imageOpsItem =
             new ImageOpsContextManagerItem(mContextManager, q);
