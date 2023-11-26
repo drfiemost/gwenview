@@ -50,7 +50,7 @@ public:
 protected:
     virtual void paint(QPainter* painter, const QStyleOptionViewItem& _option, const QModelIndex& index) const
     {
-        QStyleOptionViewItemV4 option = _option;
+        QStyleOptionViewItem option = _option;
         if (!index.parent().isValid()) {
             option.displayAlignment = Qt::AlignCenter | Qt::AlignBottom;
             option.font.setBold(true);
