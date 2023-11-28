@@ -102,6 +102,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <lib/thumbnailview/thumbnailview.h>
 #include <lib/urlutils.h>
 
+#include <algorithm>
+
 namespace Gwenview
 {
 
@@ -946,7 +948,7 @@ void MainWindow::openSelectedDocuments()
     QModelIndex firstDocumentIndex;
     QModelIndexList list = d->mThumbnailView->selectionModel()->selectedIndexes();
     // Make 'list' follow the same order as 'mThumbnailView'
-    qSort(list.begin(), list.end(), indexRowLessThan);
+    std::sort(list.begin(), list.end(), indexRowLessThan);
 
     Q_FOREACH(const QModelIndex& index, list) {
         KFileItem item = d->mDirModel->itemForIndex(index);

@@ -197,15 +197,14 @@ void ThumbnailBarItemDelegate::paint(QPainter * painter, const QStyleOptionViewI
     QPixmap thumbnailPix = d->mView->thumbnailForIndex(index);
     QRect rect = option.rect;
 
-    QStyleOptionViewItemV4 opt = option;
-    const QWidget* widget = opt.widget;
+    const QWidget* widget = option.widget;
     QStyle* style = widget ? widget->style() : QApplication::style();
     if (isSelected && !isCurrent) {
         // Draw selected but not current item backgrounds with some transparency
         // so that the current item stands out.
         painter->setOpacity(.33);
     }
-    style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
+    style->drawControl(QStyle::CE_ItemViewItem, &option, painter, widget);
     painter->setOpacity(1);
 
     // Draw thumbnail

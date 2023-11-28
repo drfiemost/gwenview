@@ -49,6 +49,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <lib/document/document.h>
 #include <lib/document/documentfactory.h>
 
+#include <algorithm>
+
 namespace Gwenview
 {
 
@@ -165,7 +167,7 @@ public:
 
     void finishAddRows()
     {
-        qSort(mRows.begin(), mRows.end(), KeyValueWidget::rowsLessThan);
+        std::sort(mRows.begin(), mRows.end(), KeyValueWidget::rowsLessThan);
         updateGeometry();
     }
 

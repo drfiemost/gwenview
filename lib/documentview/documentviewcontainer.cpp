@@ -41,6 +41,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // libc
 #include <qmath.h>
 
+#include <algorithm>
+
 namespace Gwenview
 {
 
@@ -180,7 +182,7 @@ void DocumentViewContainer::updateLayout()
     // and not through scheduleLayoutUpdate()
     d->mLayoutUpdateTimer->stop();
     QList<DocumentView*> views = (d->mViews | d->mAddedViews).toList();
-    qSort(views.begin(), views.end(), viewLessThan);
+    std::sort(views.begin(), views.end(), viewLessThan);
 
     bool animated = GwenviewConfig::animationMethod() != DocumentView::NoAnimation;
     bool crossFade = d->mAddedViews.count() == 1 && d->mRemovedViews.count() == 1;
