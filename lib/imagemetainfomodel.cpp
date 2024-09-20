@@ -41,12 +41,12 @@ namespace Gwenview
 {
 
 enum GroupRow {
-    NoGroupSpace = -2,
-    NoGroup = -1,
     GeneralGroup,
     ExifGroup,
     IptcGroup,
-    XmpGroup
+    XmpGroup,
+    NoGroupSpace,   // second last entry
+    NoGroup         // last entry
 };
 
 class MetaInfoGroup
