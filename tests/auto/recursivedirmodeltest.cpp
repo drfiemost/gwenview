@@ -31,6 +31,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <KDirModel>
 #include <qtest_kde.h>
 
+#include <algorithm>
+
 using namespace Gwenview;
 
 QTEST_KDEMAIN(RecursiveDirModelTest, GUI)
@@ -94,7 +96,7 @@ static QList<KUrl> listModelUrls(QAbstractItemModel* model)
         KFileItem item = index.data(KDirModel::FileItemRole).value<KFileItem>();
         out << item.url();
     }
-    qSort(out);
+    std::sort(out.begin(), out.end());
     return out;
 }
 
@@ -105,7 +107,7 @@ static QList<KUrl> listExpectedUrls(const QDir& dir, const QStringList& files)
         KUrl url(dir.absoluteFilePath(name));
         lst << url;
     }
-    qSort(lst);
+    std::sort(lst.begin(), lst.end());
     return lst;
 }
 
