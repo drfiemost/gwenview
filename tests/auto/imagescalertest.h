@@ -57,8 +57,8 @@ public:
         Q_FOREACH(const ImageInfo & info, mImageInfoList) {
             int right = info.left + info.image.width();
             int bottom = info.top + info.image.height();
-            imageWidth = qMax(imageWidth, right);
-            imageHeight = qMax(imageHeight, bottom);
+            imageWidth = std::max(imageWidth, right);
+            imageHeight = std::max(imageHeight, bottom);
         }
 
         QImage image(imageWidth, imageHeight, format);

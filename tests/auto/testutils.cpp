@@ -117,7 +117,7 @@ static QImage simplifyFormats(const QImage& img)
 
 inline bool fuzzyColorComponentCompare(int c1, int c2, int delta)
 {
-    return qAbs(c1 - c2) < delta;
+    return std::abs(c1 - c2) < delta;
 }
 
 bool fuzzyImageCompare(const QImage& img1_, const QImage& img2_, int delta)
