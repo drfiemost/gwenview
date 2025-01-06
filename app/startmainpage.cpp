@@ -82,8 +82,8 @@ public:
         QSize sh = QStyledItemDelegate::sizeHint(option, index);
         int iconSize = static_cast<QAbstractItemView*>(parent())->iconSize().height();
         // Copied from KFilePlacesViewDelegate::sizeHint()
-        int height = option.fontMetrics.height() / 2 + qMax(iconSize, option.fontMetrics.height());
-        sh.setHeight(qMax(sh.height(), height));
+        int height = option.fontMetrics.height() / 2 + std::max(iconSize, option.fontMetrics.height());
+        sh.setHeight(std::max(sh.height(), height));
         return sh;
     }
 };

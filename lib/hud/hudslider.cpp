@@ -220,7 +220,7 @@ void HudSlider::wheelEvent(QGraphicsSceneWheelEvent* event)
     if (!d->hasValidRange()) {
         return;
     }
-    int step = qMin(QApplication::wheelScrollLines() * d->mSingleStep, d->mPageStep);
+    int step = std::min(QApplication::wheelScrollLines() * d->mSingleStep, d->mPageStep);
     if ((event->modifiers() & Qt::ControlModifier) || (event->modifiers() & Qt::ShiftModifier)) {
         step = d->mPageStep;
     }
@@ -371,7 +371,7 @@ void HudSlider::doRepeatAction(int time)
     }
 
     int pos = d->positionForX(d->mRepeatX);
-    if (qAbs(pos - d->mSliderPosition) >= step) {
+    if (std::abs(pos - d->mSliderPosition) >= step) {
         // We are far enough from the position where the mouse button was held
         // down to be able to repeat the action one more time
         triggerAction(d->mRepeatAction);

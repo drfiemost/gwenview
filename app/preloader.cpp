@@ -103,7 +103,7 @@ void Preloader::doPreload()
         return;
     }
 
-    qreal zoom = qMin(
+    qreal zoom = std::min(
                      d->mSize.width() / qreal(d->mDocument->width()),
                      d->mSize.height() / qreal(d->mDocument->height())
                  );

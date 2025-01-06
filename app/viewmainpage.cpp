@@ -97,8 +97,8 @@ static QString gradient(Qt::Orientation orientation, const QColor &color, int va
     return grad
            .arg(x2)
            .arg(y2)
-           .arg(rgba(PaintUtils::adjustedHsv(color, 0, 0, qMin(255 - color.value(), value / 2))))
-           .arg(rgba(PaintUtils::adjustedHsv(color, 0, 0, -qMin(color.value(), value / 2))))
+           .arg(rgba(PaintUtils::adjustedHsv(color, 0, 0, std::min(255 - color.value(), value / 2))))
+           .arg(rgba(PaintUtils::adjustedHsv(color, 0, 0, -std::min(color.value(), value / 2))))
            ;
 }
 
@@ -177,9 +177,9 @@ struct ViewMainPagePrivate
         // Avoid dark and bright colors
         bgColor.setHsv(bgColor.hue(), bgColor.saturation(), (127 + 3 * bgColor.value()) / 4);
 
-        QColor leftBorderColor = PaintUtils::adjustedHsv(bgColor, 0, 0, qMin(20, 255 - bgColor.value()));
-        QColor rightBorderColor = PaintUtils::adjustedHsv(bgColor, 0, 0, -qMin(40, bgColor.value()));
-        QColor borderSelColor = PaintUtils::adjustedHsv(bgSelColor, 0, 0, -qMin(60, bgSelColor.value()));
+        QColor leftBorderColor = PaintUtils::adjustedHsv(bgColor, 0, 0, std::min(20, 255 - bgColor.value()));
+        QColor rightBorderColor = PaintUtils::adjustedHsv(bgColor, 0, 0, -std::min(40, bgColor.value()));
+        QColor borderSelColor = PaintUtils::adjustedHsv(bgSelColor, 0, 0, -std::min(60, bgSelColor.value()));
 
         QString itemCss =
             "QListView::item {"

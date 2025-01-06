@@ -147,7 +147,7 @@ void ZoomWidget::setActions(QAction* zoomToFitAction, QAction* actualSizeAction,
     d->mZoomSlider->setZoomOutAction(zoomOutAction);
 
     // Adjust sizes
-    int width = qMax(d->mZoomToFitButton->sizeHint().width(), d->mActualSizeButton->sizeHint().width());
+    int width = std::max(d->mZoomToFitButton->sizeHint().width(), d->mActualSizeButton->sizeHint().width());
     d->mZoomToFitButton->setFixedWidth(width);
     d->mActualSizeButton->setFixedWidth(width);
 }

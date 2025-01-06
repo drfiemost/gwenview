@@ -205,7 +205,7 @@ struct LoadingDocumentImplPrivate
             bool ret = KDcrawIface::KDcraw::loadEmbeddedPreview(previewData, buffer);
 
             QImage originalImage;
-            if (!ret || !originalImage.loadFromData(previewData) || qMin(originalImage.width(), originalImage.height()) < MIN_PREV_SIZE) {
+            if (!ret || !originalImage.loadFromData(previewData) || std::min(originalImage.width(), originalImage.height()) < MIN_PREV_SIZE) {
                 // if the embedded preview loading failed or gets just a small image, load
                 // half preview instead. That's slower but it works even for images containing
                 // small (160x120px) or none embedded preview.

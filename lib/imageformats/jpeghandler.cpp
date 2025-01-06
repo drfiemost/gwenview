@@ -142,7 +142,7 @@ static bool loadJpeg(QImage* image, QIODevice* ioDevice, QSize scaledSize)
         // Use !scaledSize.isEmpty(), not scaledSize.isValid() because
         // isValid() returns true if both the width and height is equal to or
         // greater than 0, so it is possible to get a division by 0.
-        cinfo.scale_denom = qMin(cinfo.image_width / scaledSize.width(),
+        cinfo.scale_denom = std::min(cinfo.image_width / scaledSize.width(),
                                  cinfo.image_height / scaledSize.height());
         if (cinfo.scale_denom < 2) {
             cinfo.scale_denom = 1;
@@ -345,10 +345,10 @@ static bool write_jpeg_image(const QImage &sourceImage, QIODevice *device, int s
 
         jpeg_set_defaults(&cinfo);
 
-        qreal diffInch = qAbs(image.dotsPerMeterX() * 2.54 / 100. - qRound(image.dotsPerMeterX() * 2.54 / 100.))
-                         + qAbs(image.dotsPerMeterY() * 2.54 / 100. - qRound(image.dotsPerMeterY() * 2.54 / 100.));
-        qreal diffCm = (qAbs(image.dotsPerMeterX() / 100. - qRound(image.dotsPerMeterX() / 100.))
-                        + qAbs(image.dotsPerMeterY() / 100. - qRound(image.dotsPerMeterY() / 100.))) * 2.54;
+        qreal diffInch = std::abs(image.dotsPerMeterX() * 2.54 / 100. - qRound(image.dotsPerMeterX() * 2.54 / 100.))
+                         + std::abs(image.dotsPerMeterY() * 2.54 / 100. - qRound(image.dotsPerMeterY() * 2.54 / 100.));
+        qreal diffCm = (std::abs(image.dotsPerMeterX() / 100. - qRound(image.dotsPerMeterX() / 100.))
+                        + std::abs(image.dotsPerMeterY() / 100. - qRound(image.dotsPerMeterY() / 100.))) * 2.54;
         if (diffInch < diffCm) {
             cinfo.density_unit = 1; // dots/inch
             cinfo.X_density = qRound(image.dotsPerMeterX() * 2.54 / 100.);
@@ -359,7 +359,7 @@ static bool write_jpeg_image(const QImage &sourceImage, QIODevice *device, int s
             cinfo.Y_density = (image.dotsPerMeterY() + 50) / 100;
         }
 
-        int quality = sourceQuality >= 0 ? qMin(sourceQuality, 100) : 75;
+        int quality = sourceQuality >= 0 ? std::min(sourceQuality, 100) : 75;
 #if defined(Q_OS_UNIXWARE)
         jpeg_set_quality(&cinfo, quality, B_TRUE /* limit to baseline-JPEG values */);
         jpeg_start_compress(&cinfo, B_TRUE);

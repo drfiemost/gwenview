@@ -127,7 +127,7 @@ void ImageScaler::doScale()
 void ImageScaler::scaleRect(const QRect& rect)
 {
     const qreal REAL_DELTA = 0.001;
-    if (qAbs(d->mZoom - 1.0) < REAL_DELTA) {
+    if (std::abs(d->mZoom - 1.0) < REAL_DELTA) {
         QImage tmp = d->mDocument->image().copy(rect);
         tmp = tmp.convertToFormat(QImage::Format_ARGB32_Premultiplied);
         scaledRect(rect.left(), rect.top(), tmp);
@@ -164,10 +164,10 @@ void ImageScaler::scaleRect(const QRect& rect)
     int sourceLeftMargin, sourceRightMargin, sourceTopMargin, sourceBottomMargin;
     int destLeftMargin, destRightMargin, destTopMargin, destBottomMargin;
     if (needsSmoothMargins) {
-        sourceLeftMargin = qMin(sourceRect.left(), SMOOTH_MARGIN);
-        sourceTopMargin = qMin(sourceRect.top(), SMOOTH_MARGIN);
-        sourceRightMargin = qMin(image.rect().right() - sourceRect.right(), SMOOTH_MARGIN);
-        sourceBottomMargin = qMin(image.rect().bottom() - sourceRect.bottom(), SMOOTH_MARGIN);
+        sourceLeftMargin = std::min(sourceRect.left(), SMOOTH_MARGIN);
+        sourceTopMargin = std::min(sourceRect.top(), SMOOTH_MARGIN);
+        sourceRightMargin = std::min(image.rect().right() - sourceRect.right(), SMOOTH_MARGIN);
+        sourceBottomMargin = std::min(image.rect().bottom() - sourceRect.bottom(), SMOOTH_MARGIN);
         sourceRect.adjust(
             -sourceLeftMargin,
             -sourceTopMargin,

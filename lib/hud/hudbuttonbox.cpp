@@ -48,7 +48,7 @@ struct HudButtonBoxPrivate
     {
         qreal minWidth = 0;
         Q_FOREACH(HudButton* button, mButtonList) {
-            minWidth = qMax(minWidth, button->preferredWidth());
+            minWidth = std::max(minWidth, button->preferredWidth());
         }
         Q_FOREACH(HudButton* button, mButtonList) {
             button->setMinimumWidth(minWidth);

@@ -79,7 +79,7 @@ DragPixmap generate(const QList<QPixmap>& pixmaps, int totalCount)
         painter.drawPixmap(rect.topLeft(), pix2);
 
         QPoint topRight = painter.transform().map(rect.topRight());
-        maxX = qMax(topRight.x(), maxX);
+        maxX = std::max(topRight.x(), maxX);
         /*
         painter.drawRect(-pix2.width() / 2, -pix2.height() - extraSpace, pix2.width(), pix2.height());
         painter.drawText(-pix2.width() / 2, -pix2.height() - extraSpace, pix2.width(), pix2.height(), Qt::AlignTop | Qt::AlignLeft, QString::number(index));

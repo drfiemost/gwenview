@@ -86,7 +86,7 @@ qulonglong getFreeMemory()
     static QTime lastUpdate = QTime::currentTime().addSecs(-3);
     static qulonglong cachedValue = 0;
 
-    if ( qAbs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
+    if ( std::abs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
         return cachedValue;
 
 #if defined(Q_OS_LINUX)

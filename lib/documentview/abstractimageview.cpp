@@ -61,8 +61,8 @@ struct AbstractImageViewPrivate
         QSizeF zoomedDocSize = q->documentSize() * mZoom;
         QSizeF viewSize = q->boundingRect().size();
         QPointF offset(
-            qMax((viewSize.width() - zoomedDocSize.width()) / 2, qreal(0.)),
-            qMax((viewSize.height() - zoomedDocSize.height()) / 2, qreal(0.))
+            std::max((viewSize.width() - zoomedDocSize.width()) / 2, qreal(0.)),
+            std::max((viewSize.height() - zoomedDocSize.height()) / 2, qreal(0.))
         );
         if (offset != mImageOffset) {
             mImageOffset = offset;
@@ -267,9 +267,9 @@ qreal AbstractImageView::computeZoomToFit() const
     QSizeF viewSize = boundingRect().size();
     qreal fitWidth = viewSize.width() / docSize.width();
     qreal fitHeight = viewSize.height() / docSize.height();
-    qreal fit = qMin(fitWidth, fitHeight);
+    qreal fit = std::min(fitWidth, fitHeight);
     if (!d->mEnlargeSmallerImages) {
-        fit = qMin(fit, qreal(1.));
+        fit = std::min(fit, qreal(1.));
     }
     return fit;
 }

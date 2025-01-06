@@ -79,7 +79,7 @@ bool ThumbnailContext::load(const QString &pixPath, int pixelSize)
 
         // We need QImage. Loading JpegContent from QImage - exif lost
         // Loading QImage from JpegContent - unimplemented, would go with loadFromData
-        if (!ret || !originalImage.loadFromData(data) || qMin(originalImage.width(), originalImage.height()) < MIN_PREV_SIZE) {
+        if (!ret || !originalImage.loadFromData(data) || std::min(originalImage.width(), originalImage.height()) < MIN_PREV_SIZE) {
             // if the emebedded preview loading failed or gets just a small image, load
             // half preview instead. That's slower...
             if (!KDcrawIface::KDcraw::loadHalfPreview(data, pixPath)) {
@@ -119,7 +119,7 @@ bool ThumbnailContext::load(const QString &pixPath, int pixelSize)
         QImage thumbnail = content.thumbnail();
         orientation = content.orientation();
 
-        if (qMax(thumbnail.width(), thumbnail.height()) >= pixelSize) {
+        if (std::max(thumbnail.width(), thumbnail.height()) >= pixelSize) {
             mImage = thumbnail;
             if (orientation != NORMAL && orientation != NOT_AVAILABLE) {
                 QMatrix matrix = ImageUtils::transformMatrix(orientation);
@@ -153,7 +153,7 @@ bool ThumbnailContext::load(const QString &pixPath, int pixelSize)
     mOriginalWidth = originalSize.width() * previewRatio;
     mOriginalHeight = originalSize.height() * previewRatio;
 
-    if (qMax(mOriginalWidth, mOriginalHeight) <= pixelSize) {
+    if (std::max(mOriginalWidth, mOriginalHeight) <= pixelSize) {
         mImage = originalImage;
         mNeedCaching = format != "png";
     } else {

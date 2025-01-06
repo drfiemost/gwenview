@@ -153,7 +153,7 @@ struct PreviewItemDelegatePrivate
         const int posX = mContextBarActions == PreviewItemDelegate::SelectionAction
             ? 0
             : (rect.width() - mContextBar->width()) / 2;
-        const int posY = qMax(CONTEXTBAR_MARGIN, mThumbnailSize.height() - thumbnailPix.height() - mContextBar->height());
+        const int posY = std::max(CONTEXTBAR_MARGIN, mThumbnailSize.height() - thumbnailPix.height() - mContextBar->height());
         mContextBar->move(rect.topLeft() + QPoint(posX, posY));
         mContextBar->show();
     }

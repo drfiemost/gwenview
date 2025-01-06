@@ -66,7 +66,7 @@ struct HudButtonPrivate
 
         if (!mIcon.isNull()) {
             int size = KIconLoader::global()->currentSize(KIconLoader::Small);
-            info->iconRect = QRect(padding, padding, size, qMax(size, minInnerSize.height()));
+            info->iconRect = QRect(padding, padding, size, std::max(size, minInnerSize.height()));
             minInnerSize.rwidth() -= size;
         }
         if (!mText.isEmpty()) {

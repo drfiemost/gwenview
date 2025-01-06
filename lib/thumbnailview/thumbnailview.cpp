@@ -117,14 +117,14 @@ struct Thumbnail
         if (mGroupPix.isNull()) {
             return false;
         }
-        const int groupSize = qMax(mGroupPix.width(), mGroupPix.height());
+        const int groupSize = std::max(mGroupPix.width(), mGroupPix.height());
         if (groupSize >= size) {
             return true;
         }
 
         // groupSize is less than size, but this may be because the full image
         // is the same size as groupSize
-        return groupSize == qMax(mFullSize.width(), mFullSize.height());
+        return groupSize == std::max(mFullSize.width(), mFullSize.height());
     }
 
     void prepareForRefresh(const KDateTime& mtime)
@@ -231,8 +231,8 @@ struct ThumbnailViewPrivate
     void roughAdjustThumbnail(Thumbnail* thumbnail)
     {
         const QPixmap& mGroupPix = thumbnail->mGroupPix;
-        const int groupSize = qMax(mGroupPix.width(), mGroupPix.height());
-        const int fullSize = qMax(thumbnail->mFullSize.width(), thumbnail->mFullSize.height());
+        const int groupSize = std::max(mGroupPix.width(), mGroupPix.height());
+        const int fullSize = std::max(thumbnail->mFullSize.width(), thumbnail->mFullSize.height());
         if (fullSize == groupSize && mGroupPix.height() <= mThumbnailSize.height() && mGroupPix.width() <= mThumbnailSize.width()) {
             thumbnail->mAdjustedPix = mGroupPix;
             thumbnail->mRough = false;
@@ -244,7 +244,7 @@ struct ThumbnailViewPrivate
 
     void initDragPixmap(QDrag* drag, const QModelIndexList& indexes)
     {
-        const int thumbCount = qMin(indexes.count(), int(DragPixmapGenerator::MaxCount));
+        const int thumbCount = std::min(indexes.count(), int(DragPixmapGenerator::MaxCount));
         QList<QPixmap> lst;
         for (int row = 0; row < thumbCount; ++row) {
             const KUrl url = urlForIndex(indexes[row]);
@@ -262,7 +262,7 @@ struct ThumbnailViewPrivate
             return pix.scaled(mThumbnailSize.width(), mThumbnailSize.height(), Qt::KeepAspectRatio, transformationMode);
             break;
         case ThumbnailView::ScaleToSquare: {
-            int minSize = qMin(pix.width(), pix.height());
+            int minSize = std::min(pix.width(), pix.height());
             QPixmap pix2 = pix.copy((pix.width() - minSize) / 2, (pix.height() - minSize) / 2, minSize, minSize);
             return pix2.scaled(mThumbnailSize.width(), mThumbnailSize.height(), Qt::KeepAspectRatio, transformationMode);
         }
@@ -770,7 +770,7 @@ void ThumbnailView::wheelEvent(QWheelEvent* event)
     //verticalScrollBar()->setSingleStep(d->mThumbnailSize / 5);
     if (event->modifiers() == Qt::ControlModifier) {
         int width = d->mThumbnailSize.width() + (event->delta() > 0 ? 1 : -1) * WHEEL_ZOOM_MULTIPLIER;
-        width = qMax(int(MinThumbnailSize), qMin(width, int(MaxThumbnailSize)));
+        width = std::max(int(MinThumbnailSize), std::min(width, int(MaxThumbnailSize)));
         setThumbnailWidth(width);
     } else {
         QListView::wheelEvent(event);
