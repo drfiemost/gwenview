@@ -52,6 +52,7 @@ public:
     Exiv2ImageLoader();
     ~Exiv2ImageLoader();
 
+    bool load(const QString&);
     bool load(const QByteArray&);
     QString errorMessage() const;
 #if EXIV2_TEST_VERSION(0,28,0)
