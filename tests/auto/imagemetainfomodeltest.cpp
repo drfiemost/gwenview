@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "../lib/imagemetainfomodel.h"
 #include "testutils.h"
 
-#include <exiv2/exif.hpp>
+#include <exiv2/exiv2.hpp>
 
 #include "moc_imagemetainfomodeltest.cpp"
 
