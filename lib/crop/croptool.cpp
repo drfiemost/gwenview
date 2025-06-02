@@ -68,7 +68,7 @@ Q_DECLARE_FLAGS(CropHandle, CropHandleFlag)
 inline QPoint boundPointX(const QPoint& point, const QRect& rect)
 {
     return QPoint(
-               qBound(rect.left(), point.x(), rect.right()),
+               std::clamp(point.x(), rect.left(), rect.right()),
                point.y()
            );
 }
@@ -76,8 +76,8 @@ inline QPoint boundPointX(const QPoint& point, const QRect& rect)
 inline QPoint boundPointXY(const QPoint& point, const QRect& rect)
 {
     return QPoint(
-               qBound(rect.left(), point.x(), rect.right()),
-               qBound(rect.top(),  point.y(), rect.bottom())
+               std::clamp(point.x(), rect.left(), rect.right()),
+               std::clamp(point.y(), rect.top(), rect.bottom())
            );
 }
 
@@ -112,7 +112,7 @@ struct CropToolPrivate
             top = rect.bottom() - HANDLE_SIZE;
         } else {
             top = rect.top() + (rect.height() - HANDLE_SIZE) / 2;
-            top = qBound(0, top, viewportSize.height() - HANDLE_SIZE);
+            top = std::clamp(top, 0, viewportSize.height() - HANDLE_SIZE);
         }
 
         if (handle & CH_Left) {
@@ -121,7 +121,7 @@ struct CropToolPrivate
             left = rect.right() - HANDLE_SIZE;
         } else {
             left = rect.left() + (rect.width() - HANDLE_SIZE) / 2;
-            left = qBound(0, left, viewportSize.width() - HANDLE_SIZE);
+            left = std::clamp(left, 0, viewportSize.width() - HANDLE_SIZE);
         }
 
         return QRect(left, top, HANDLE_SIZE, HANDLE_SIZE);
@@ -317,8 +317,8 @@ void CropTool::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     const QSize imageSize = imageView()->document()->size();
 
     QPoint point = imageView()->mapToImage(event->pos().toPoint());
-    int posX = qBound(0, point.x(), imageSize.width() - 1);
-    int posY = qBound(0, point.y(), imageSize.height() - 1);
+    int posX = std::clamp(point.x(), 0, imageSize.width() - 1);
+    int posY = std::clamp(point.y(), 0, imageSize.height() - 1);
 
     if (d->mMovingHandle == CH_None) {
         return;

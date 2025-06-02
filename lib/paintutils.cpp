@@ -124,9 +124,9 @@ QColor adjustedHsv(const QColor& color, int deltaH, int deltaS, int deltaV)
     int hue, saturation, value;
     color.getHsv(&hue, &saturation, &value);
     return QColor::fromHsv(
-               qBound(0, hue + deltaH, 359),
-               qBound(0, saturation + deltaS, 255),
-               qBound(0, value + deltaV, 255)
+               std::clamp(hue + deltaH, 0, 359),
+               std::clamp(saturation + deltaS, 0, 255),
+               std::clamp(value + deltaV, 0, 255)
            );
 }
 

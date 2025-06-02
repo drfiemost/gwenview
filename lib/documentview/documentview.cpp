@@ -240,7 +240,7 @@ struct DocumentViewPrivate
     void setZoom(qreal zoom, const QPointF& center = QPointF(-1, -1))
     {
         uncheckZoomToFit();
-        zoom = qBound(q->minimumZoom(), zoom, MAXIMUM_ZOOM_VALUE);
+        zoom = std::clamp(zoom, q->minimumZoom(), MAXIMUM_ZOOM_VALUE);
         mAdapter->setZoom(zoom, center);
     }
 
@@ -616,7 +616,7 @@ qreal DocumentView::minimumZoom() const
 {
     // There is no point zooming out less than zoomToFit, but make sure it does
     // not get too small either
-    return qBound(qreal(0.001), d->mAdapter->computeZoomToFit(), qreal(1.));
+    return std::clamp(d->mAdapter->computeZoomToFit(), qreal(0.001), qreal(1.));
 }
 
 void DocumentView::setCompareMode(bool compare)

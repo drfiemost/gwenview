@@ -291,7 +291,7 @@ void HudSlider::setSingleStep(int step)
 
 void HudSlider::setValue(int value)
 {
-    value = qBound(d->mMin, value, d->mMax);
+    value = std::clamp(value, d->mMin, d->mMax);
     if (value != d->mValue) {
         d->mValue = value;
         setSliderPosition(value);
@@ -307,7 +307,7 @@ int HudSlider::sliderPosition() const
 
 void HudSlider::setSliderPosition(int pos)
 {
-    pos = qBound(d->mMin, pos, d->mMax);
+    pos = std::clamp(pos, d->mMin, d->mMax);
     if (pos != d->mSliderPosition) {
         d->mSliderPosition = pos;
         d->updateHandleRect();

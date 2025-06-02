@@ -124,7 +124,7 @@ inline qreal computeRedEyeAlpha(const QColor& src)
         axs = ramp(sat);
     }
 
-    return qBound(qreal(0.), src.alphaF() * axs, qreal(1.));
+    return std::clamp(src.alphaF() * axs, qreal(0.), qreal(1.));
 }
 
 void RedEyeReductionImageOperation::apply(QImage* img, const QRectF& rectF)
