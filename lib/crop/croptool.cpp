@@ -98,7 +98,7 @@ struct CropToolPrivate
 
     QRect viewportCropRect() const
     {
-        return q->imageView()->mapToView(mRect.adjusted(0, 0, 1, 1));
+        return q->imageView()->mapToView(mRect);
     }
 
     QRect handleViewportRect(CropHandle handle)
@@ -109,7 +109,7 @@ struct CropToolPrivate
         if (handle & CH_Top) {
             top = rect.top();
         } else if (handle & CH_Bottom) {
-            top = rect.bottom() - HANDLE_SIZE;
+            top = rect.bottom() + 1 - HANDLE_SIZE;
         } else {
             top = rect.top() + (rect.height() - HANDLE_SIZE) / 2;
             top = std::clamp(top, 0, viewportSize.height() - HANDLE_SIZE);
@@ -118,7 +118,7 @@ struct CropToolPrivate
         if (handle & CH_Left) {
             left = rect.left();
         } else if (handle & CH_Right) {
-            left = rect.right() - HANDLE_SIZE;
+            left = rect.right() + 1 - HANDLE_SIZE;
         } else {
             left = rect.left() + (rect.width() - HANDLE_SIZE) / 2;
             left = std::clamp(left, 0, viewportSize.width() - HANDLE_SIZE);
@@ -129,7 +129,7 @@ struct CropToolPrivate
 
     CropHandle handleAt(const QPointF& pos)
     {
-        Q_FOREACH(const CropHandle & handle, mCropHandleList) {
+        for(const CropHandle & handle: mCropHandleList) {
             QRectF rect = handleViewportRect(handle);
             if (rect.contains(pos)) {
                 return handle;
@@ -271,19 +271,18 @@ void CropTool::paint(QPainter* painter)
     static const QColor fillColor   = QColor::fromHsvF(0, 0, 0.75, 0.66);
 
     QRegion outerRegion = QRegion(imageRect) - QRegion(rect);
-    Q_FOREACH(const QRect & outerRect, outerRegion.rects()) {
+    for(const QRect & outerRect: outerRegion.rects()) {
         painter->fillRect(outerRect, outerColor);
     }
 
     painter->setPen(borderColor);
 
-    rect.adjust(0, 0, -1, -1);
     painter->drawRect(rect);
 
     if (d->mMovingHandle == CH_None) {
         // Only draw handles when user is not resizing
         painter->setBrush(fillColor);
-        Q_FOREACH(const CropHandle & handle, d->mCropHandleList) {
+        for(const CropHandle & handle: d->mCropHandleList) {
             rect = d->handleViewportRect(handle);
             painter->drawRect(rect);
         }
