@@ -86,8 +86,8 @@ struct AbstractImageViewPrivate
         QSizeF zoomedDocSize = q->documentSize() * mZoom;
         QSizeF viewSize = q->boundingRect().size();
         QPointF newPos(
-            std::clamp(_newPos.x(), qreal(0.), zoomedDocSize.width() - viewSize.width()),
-            std::clamp(_newPos.y(), qreal(0.), zoomedDocSize.height() - viewSize.height())
+            std::clamp(_newPos.x(), qreal(0.), std::max(qreal(0.), zoomedDocSize.width() - viewSize.width())),
+            std::clamp(_newPos.y(), qreal(0.), std::max(qreal(0.), zoomedDocSize.height() - viewSize.height()))
         );
         if (newPos != mScrollPos) {
             QPointF oldPos = mScrollPos;
