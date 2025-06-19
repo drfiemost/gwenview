@@ -33,10 +33,6 @@ if(exiv2_FOUND)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
 endif()
 
-set(FPHSA_NAME_MISMATCHED TRUE)
-macro_optional_find_package(Kipi)
-macro_log_feature(KIPI_FOUND "libkipi" "Provides various image manipulation and export features" "http://www.kipi-plugins.org" FALSE)
-
 find_package(LCMS2)
 macro_log_feature(LCMS2_FOUND "LittleCMS" "Color management engine" "http://www.littlecms.com" TRUE "2.0")
 
@@ -76,7 +72,5 @@ add_subdirectory(images)
 add_subdirectory(cursors)
 add_subdirectory(color-schemes)
 macro_optional_add_subdirectory(doc)
-
-configure_file(config-gwenview.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-gwenview.h)
 
 macro_display_feature_log()

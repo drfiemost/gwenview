@@ -4,10 +4,6 @@ include_directories(
     ${LIBKONQ_INCLUDE_DIR}
     )
 
-if (KIPI_FOUND)
-    include_directories(${KIPI_INCLUDE_DIR})
-endif()
-
 # For lib/gwenviewconfig.h and config-gwenview.h
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/..
@@ -38,16 +34,6 @@ set(gwenview_SRCS
     browsemainpage.cpp
     )
 
-if (KIPI_FOUND)
-    set (gwenview_SRCS
-        ${gwenview_SRCS}
-        kipiexportaction.cpp
-        kipiimagecollectionselector.cpp
-        kipiinterface.cpp
-        kipiuploadwidget.cpp
-        )
-endif()
-
 kde4_add_ui_files(gwenview_SRCS
     advancedconfigpage.ui
     fullscreenconfigwidget.ui
@@ -71,10 +57,6 @@ target_link_libraries(gwenview
     )
 
 target_link_libraries(gwenview LINK_INTERFACE_LIBRARIES ${KDE4_KIO_LIBS} ${QT_QTCORE_LIBRARY})
-
-if (KIPI_FOUND)
-    target_link_libraries(gwenview ${KIPI_LIBRARIES})
-endif()
 
 install(TARGETS gwenview
     ${INSTALL_TARGETS_DEFAULT_ARGS})
