@@ -52,11 +52,6 @@ include_directories(
     ${PNG_INCLUDE_DIRS}
     )
 
-# For config-gwenview.h
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}/..
-    )
-
 set(gwenviewlib_SRCS
     cms/iccjpeg.c
     cms/cmsprofile.cpp

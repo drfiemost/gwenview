@@ -18,11 +18,6 @@ include_directories(
     ${importer_SOURCE_DIR}
     )
 
-# For config-gwenview.h
-include_directories(
-    ${gwenview_BINARY_DIR}
-    )
-
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 
 gv_add_unit_test(imagescalertest testutils.cpp)

@@ -4,7 +4,7 @@ include_directories(
     ${LIBKONQ_INCLUDE_DIR}
     )
 
-# For lib/gwenviewconfig.h and config-gwenview.h
+# For lib/gwenviewconfig.h
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/..
     )
